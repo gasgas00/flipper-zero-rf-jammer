@@ -3,7 +3,7 @@ name: Build Flipper Zero App
 on:
   push:
     branches:
-      - main  # Cambia con il nome del branch principale del tuo repository
+      - main  # Sostituisci con il nome del tuo branch (es. master, dev)
   pull_request:
     branches:
       - main
@@ -14,12 +14,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Usa la versione più recente
+        uses: actions/checkout@v4  # Versione aggiornata
 
       - name: Set up Python
-        uses: actions/setup-python@v4  # Usa la versione più recente
+        uses: actions/setup-python@v5  # Versione aggiornata
         with:
-          python-version: '3.9'
+          python-version: '3.11'  # Usa Python 3.11 o superiore
 
       - name: Install dependencies
         run: |
@@ -34,7 +34,7 @@ jobs:
           make
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3  # Nome corretto: upload-artifact
+        uses: actions/upload-artifact@v4  # Versione corretta
         with:
           name: flipper-app
-          path: build/*.fap
+          path: build/*.fap  # Verifica il percorso del file .fap
