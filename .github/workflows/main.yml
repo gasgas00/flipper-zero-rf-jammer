@@ -1,40 +1,37 @@
-name: Build Flipper Zero App
+name: Build Jammer App
 
 on:
   push:
-    branches:
-      - main  # Sostituisci con il nome del tuo branch (es. master, dev)
-  pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4  # Versione aggiornata
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive  # Importante per il firmware Flipper
 
       - name: Set up Python
-        uses: actions/setup-python@v5  # Versione aggiornata
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Usa Python 3.11 o superiore
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential clang cmake libusb-1.0-0-dev
 
-      - name: Build application
+      - name: Compile Jammer
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake -DFLIPPER_FIRMWARE_ROOT="$GITHUB_WORKSPACE/flipperzero-firmware" ..
           make
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4  # Versione corretta
+      - name: Upload FAP
+        uses: actions/upload-artifact@v4
         with:
-          name: flipper-app
-          path: build/*.fap  # Verifica il percorso del file .fap
+          name: jammer.fap
+          path: build/jammer.fap
