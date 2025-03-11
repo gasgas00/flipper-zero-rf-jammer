@@ -34,7 +34,7 @@ jobs:
           make
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3  # Usa la versione più recente
+        uses: actions/upload-artifact@v3  # Nome corretto: upload-artifact
         with:
           name: flipper-app
           path: build/*.fap
