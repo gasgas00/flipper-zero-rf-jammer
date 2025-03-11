@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Usa la versione più recente
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4  # Usa la versione più recente
         with:
           python-version: '3.9'
 
@@ -34,7 +34,7 @@ jobs:
           make
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Usa la versione più recente
         with:
           name: flipper-app
           path: build/*.fap
